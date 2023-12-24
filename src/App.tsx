@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { useTodoStore } from '../src/store/Todo';
+
+import Header1 from './components/Header1';
+// @ts-ignore
+import Navigation from './components/Navigation';
+import Line from './components/Line';
+import TodoItems from './components/TodoItems';
+
 
 function App() {
+  const {todos} = useTodoStore((state) => state)
+  const [notes,setNotes] = useState([])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container px-24 py-10">
+        <Header1 />
+        <Navigation />
+        <Line />
+        <TodoItems />
+      </div>
+     
     </div>
   );
 }
