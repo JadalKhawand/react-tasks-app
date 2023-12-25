@@ -10,15 +10,15 @@ import TodoItems from './components/TodoItems';
 
 
 function App() {
-  const {todos} = useTodoStore((state) => state)
-  const [notes,setNotes] = useState([])
+  const {todos} = useTodoStore()
+  const {done} = useTodoStore()
   return (
     <div className="App">
       <div className="container px-24 py-10">
         <Header1 />
         <Navigation />
         <Line />
-        <TodoItems />
+        <TodoItems notes={todos} done={done} />
       </div>
      
     </div>
