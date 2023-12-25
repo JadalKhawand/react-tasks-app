@@ -8,7 +8,7 @@ function Navigation() {
   const [newTodo, setNewTodo] = useState({
     title: '',
     date: '',
-    priority: 1, // Default priority
+    priority: 1, 
     content: '',
     completed:false,
   });
@@ -34,6 +34,7 @@ function Navigation() {
     setNewTodo((prevTodo) => ({
       ...prevTodo,
       [name]: value,
+
     }));
   };
 
@@ -72,14 +73,17 @@ function Navigation() {
               onChange={handleInputChange}
               className="border p-2 mb-4 w-full"
             />
-            <label>Date:</label>
+            <label>Please enter how many days left for the task:</label>
             <input
-              type="text"
+              type="number"
               name="date"
               value={newTodo.date}
               onChange={handleInputChange}
               className="border p-2 mb-4 w-full"
+              min={1}
+              max={30}
             />
+            
             <label>Priority:</label>
             <input
               type="number"

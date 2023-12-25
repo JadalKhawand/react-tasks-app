@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTodoStore } from "../store/Todo";
 
 function Todo({ note }: { note: any }) {
-  const { toggleTodoStatus } = useTodoStore();
+  const { toggleTodoStatus, deleteTodo, editTodo } = useTodoStore();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(note.content);
+
+  function handleDelete() {
+    deleteTodo(note.id);
+  }
 
   function handleCheckboxChange() {
     toggleTodoStatus(note.id);
   }
+
+  function handleEdit() {
+    setIsEditing(true);
+  }
+
+  function handleSaveEdit() {
+    editTodo(note.id, { content: editedContent });
+    setIsEditing(false);
+  }
+
+  function handleCancelEdit() {
+    setIsEditing(false);
+    // Optionally, reset the edited content to the original content
+    setEditedContent(note.content);
+  }
+
+
+
   return (
     <div className="flex divWidth flex-row gap-5 bg-blue-400 p-4 rounded-3xl my-3 justify-between w-full">
       <div className="mainPart">
-        <div className="w-80 flex justify-between">
+        <div className="w-96 flex justify-between">
           <div>
             <span>{`(${note.priority}) `}</span>
             <span>{note.title}</span>
@@ -20,23 +44,49 @@ function Todo({ note }: { note: any }) {
           </div>
         </div>
         <br />
-        <div className="content">
-          <h1 className="text-start wrap-text">
-            {note.content}
-          </h1>
-        </div>
+        {isEditing ? (
+          <div className="content whitespace-pre-wrap">
+            <textarea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="w-full h-20 p-2"
+            />
+          </div>
+        ) : (
+          <div className="content whitespace-pre-wrap">
+            <h1 className="text-start whitespace-pre-wrap">{note.content}</h1>
+          </div>
+        )}
       </div>
-      
 
       <div className="editPart flex flex-col justify-between">
         <div className="checkbox">
-          <input type="checkbox" checked={note.completed}
-          // @ts-ignore
-          onChange={() => handleCheckboxChange(note.id)}/>
+          <input
+            type="checkbox"
+            checked={note.completed}
+            onChange={handleCheckboxChange}
+          />
         </div>
         <div className="editDelete">
-          <h1>✏️</h1>
-          <h1>🗑️</h1>
+          {isEditing ? (
+            <>
+              <button className="mr-2" onClick={handleSaveEdit}>
+                Save
+              </button>
+              <button onClick={handleCancelEdit}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <h1 onClick={handleEdit}>✏️</h1>
+              <h1
+                className="cursor-pointer"
+                // @ts-ignore
+                onClick={() => handleDelete(note.id)}
+              >
+                🗑️
+              </h1>
+            </>
+          )}
         </div>
       </div>
     </div>
