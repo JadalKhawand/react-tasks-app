@@ -3,7 +3,7 @@ import { useTodoStore } from '../store/Todo';
 
 function Navigation() {
   const addTodo = useTodoStore((state) => state.addTodo);
-
+  const {searchTodos} = useTodoStore()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTodo, setNewTodo] = useState({
     title: '',
@@ -49,6 +49,10 @@ function Navigation() {
     // Close the modal after submitting
     closeModal();
   };
+  function handleSearch(e:any){
+    const searchTerm = e.target.value;
+    searchTodos(searchTerm);
+  }
   
 
   return (
@@ -57,7 +61,7 @@ function Navigation() {
         <h1 onClick={openModal} className='cursor-pointer text-5xl'>+</h1>
       </div>
       <div className="search w-3/4">
-        <input className='p-4 w-full rounded-2xl indent-3' type="text" placeholder='Search...' />
+        <input className='p-4 w-full rounded-2xl indent-3' type="text" placeholder='Search...' onChange={handleSearch} />
       </div>
 
       {/* Modal */}

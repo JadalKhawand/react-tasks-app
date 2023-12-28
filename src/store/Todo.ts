@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import { persist, createJSONStorage } from 'zustand/middleware'
 type Todo = {
   id: number;
   title: string;
@@ -18,10 +18,12 @@ interface TodoStore {
   editTodo: (id: number, updatedTodo: Partial<Todo>) => void;
   sortTodosAsc: () => void; 
   sortTodosDesc: () => void; 
-  
+  searchTodos: (searchTerm: string) => void;
 }
 
-export const useTodoStore = create<TodoStore>((set) => ({
+export const useTodoStore = create<TodoStore>(
+  // @ts-ignore
+  persist((set) => ({
   todos: [
     {
       id: 0,
@@ -89,4 +91,28 @@ export const useTodoStore = create<TodoStore>((set) => ({
     const sortedTodos = [...state.todos].sort((a, b) => b.priority - a.priority);
     return { todos: sortedTodos, done: state.done };
   }),
-}));
+  searchTodos: (searchTerm: string) => set((state) => {
+    const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+
+    if (normalizedSearchTerm === '') {
+      // If the search term is empty, show all todos
+      return state;
+    }
+
+    const filteredTodos = state.todos.filter((todo) =>
+      todo.title.toLowerCase().includes(normalizedSearchTerm) ||
+      todo.content.toLowerCase().includes(normalizedSearchTerm)
+    );
+
+    const filteredDone = state.done.filter((todo) =>
+      todo.title.toLowerCase().includes(normalizedSearchTerm) ||
+      todo.content.toLowerCase().includes(normalizedSearchTerm)
+    );
+
+    return { ...state, todos: filteredTodos, done: filteredDone };
+  }),
+
+}),{
+  name:"storage"
+})
+)
