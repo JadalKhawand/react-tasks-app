@@ -39,14 +39,19 @@ function Navigation() {
   };
 
   const handleSubmit = () => {
-    // You might want to add some validation here before adding the todo
+
+    if (!newTodo.title || !newTodo.date || !newTodo.content) {
+      alert('Please fill in all required fields (Title, Date, Content).');
+      return;
+    }
     addTodo({
       ...newTodo,
-      id: new Date().getTime(), // Unique ID, you might want to use a better method for generating IDs
-      completed: false, // Assuming completed should be set to false by default
+      id: new Date().getTime(), 
+      completed: false, 
+      date: `${newTodo.date} Day${newTodo.date === "1" ? '' : 's'}`
     });
     
-    // Close the modal after submitting
+    
     closeModal();
   };
   function handleSearch(e:any){

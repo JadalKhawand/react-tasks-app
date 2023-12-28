@@ -6,7 +6,10 @@ function Todo({ note }: { note: any }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(note.content);
 
+  const textColorClass = note.date ==="1 Days" ? 'text-red-800 text-2xl':'text-default'
+
   function handleDelete() {
+
     deleteTodo(note.id);
   }
 
@@ -29,7 +32,7 @@ function Todo({ note }: { note: any }) {
     setEditedContent(note.content);
   }
 
-
+  
 
   return (
     <div className="flex divWidth flex-row gap-5 bg-blue-400 p-4 rounded-3xl my-3 justify-between w-full">
@@ -43,7 +46,7 @@ function Todo({ note }: { note: any }) {
             <h1>{note.date}</h1>
           </div>
         </div>
-        <br />
+       
         {isEditing ? (
           <div className="content whitespace-pre-wrap">
             <textarea
@@ -53,8 +56,8 @@ function Todo({ note }: { note: any }) {
             />
           </div>
         ) : (
-          <div className="content whitespace-pre-wrap">
-            <h1 className="text-start whitespace-pre-wrap">{note.content}</h1>
+          <div className="content whitespace-pre-wrap mt-2">
+            <h1 className={`text-start whitespace-pre-wrap ${textColorClass}`}>{note.content}</h1>
           </div>
         )}
       </div>
@@ -87,6 +90,7 @@ function Todo({ note }: { note: any }) {
               </h1>
             </>
           )}
+          
         </div>
       </div>
     </div>

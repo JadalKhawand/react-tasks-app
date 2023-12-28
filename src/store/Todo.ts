@@ -111,6 +111,7 @@ export const useTodoStore = create<TodoStore>(
 
     return { ...state, todos: filteredTodos, done: filteredDone };
   }),
+  
 
 }),{
   name:"storage"

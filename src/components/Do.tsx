@@ -9,7 +9,7 @@ function Done({ note }: { note: any }): JSX.Element {
   return (
     <div className="w-full flex flex-row gap-5 bg-blue-400 p-4 rounded-3xl my-3 justify-between">
       <div className="mainPart">
-        <div className="flex justify-between">
+        <div className="flex w-96 justify-between">
           <div className='line-through'>
             <span >{`(${note.priority}) `}</span>
             <span>{note.title}</span>
@@ -18,9 +18,9 @@ function Done({ note }: { note: any }): JSX.Element {
             <h1>{note.date}</h1>
           </div>
         </div>
-        <br />
+       
         <div className="content">
-          <h1 className="text-start line-through">
+          <h1 className="text-start line-through mt-2">
             {note.content}
           </h1>
         </div>
