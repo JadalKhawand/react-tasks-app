@@ -6,7 +6,7 @@ function Todo({ note }: { note: any }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(note.content);
 
-  const textColorClass = note.date ==="1 Days" ? 'text-red-800 text-2xl':'text-default'
+  const textColorClass = note.date ==="1 Day" ? 'text-red-800 text-2xl':'text-default'
 
   function handleDelete() {
 

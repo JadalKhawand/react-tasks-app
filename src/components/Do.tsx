@@ -6,6 +6,9 @@ function Done({ note }: { note: any }): JSX.Element {
   function handleDelete() {
     deleteTodo(note.id);
   }
+  function handleCheckboxChange() {
+    toggleTodoStatus(note.id);
+  }
   return (
     <div className="w-full flex flex-row gap-5 bg-blue-400 p-4 rounded-3xl my-3 justify-between">
       <div className="mainPart">
@@ -29,7 +32,7 @@ function Done({ note }: { note: any }): JSX.Element {
       <div className="editPart flex flex-col justify-between">
         <div className="checkbox">
           {/* @ts-ignore */}
-          <input type="checkbox" checked='true'/>
+          <input type="checkbox" checked='true' onChange={handleCheckboxChange}/>
         </div>
         <div className="editDelete">
           <h1>✏️</h1>

@@ -94,10 +94,7 @@ export const useTodoStore = create<TodoStore>(
   searchTodos: (searchTerm: string) => set((state) => {
     const normalizedSearchTerm = searchTerm.toLowerCase().trim();
 
-    if (normalizedSearchTerm === '') {
-      // If the search term is empty, show all todos
-      return state;
-    }
+    
 
     const filteredTodos = state.todos.filter((todo) =>
       todo.title.toLowerCase().includes(normalizedSearchTerm) ||
@@ -108,6 +105,10 @@ export const useTodoStore = create<TodoStore>(
       todo.title.toLowerCase().includes(normalizedSearchTerm) ||
       todo.content.toLowerCase().includes(normalizedSearchTerm)
     );
+    if (normalizedSearchTerm === '') {
+      // If the search term is empty, show all todos
+      return state;
+    }
 
     return { ...state, todos: filteredTodos, done: filteredDone };
   }),

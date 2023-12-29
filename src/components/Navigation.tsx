@@ -62,7 +62,7 @@ function Navigation() {
 
   return (
     <div className='flex gap-2 mt-5'>
-      <div className="add w-1/4 bg-green-700 rounded-2xl">
+      <div className="add w-1/4 bg-green-500 rounded-2xl">
         <h1 onClick={openModal} className='cursor-pointer text-5xl'>+</h1>
       </div>
       <div className="search w-3/4">
